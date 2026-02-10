@@ -19,7 +19,8 @@ public class SaleDao {
     }
 
     // Read
-    public List<Sale> getAll() {
+    public List<Sale> getTodaySales() {
+        // TODO: Query all sales of current date.
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("from Sale", Sale.class).list();
         }
