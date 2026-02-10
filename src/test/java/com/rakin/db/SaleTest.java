@@ -2,36 +2,37 @@ package com.rakin.db;
 
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Test;
 
 class SaleTest {
-    private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private static final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
     @AfterAll
-    protected static void teardown() {
+    static void teardown() {
         HibernateUtil.shutdown();
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getId() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getCreatedAt() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getProduct() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setProduct() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getPrice() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setPrice() {
     }
 }

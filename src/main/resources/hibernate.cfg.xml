@@ -9,12 +9,8 @@
 
         <!-- Database connection settings -->
         <property name="connection.driver_class">org.postgresql.Driver</property>
-        <!--        <property name="connection.url">jdbc:postgresql://localhost/sales_saver</property>-->
 
         <property name="hbm2ddl.auto">update</property>
-
-        <!-- SQL dialect -->
-        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>
