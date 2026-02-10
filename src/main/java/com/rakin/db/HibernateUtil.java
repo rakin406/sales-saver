@@ -1,5 +1,6 @@
 package com.rakin.db;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -20,7 +21,8 @@ public class HibernateUtil {
         try {
             // Create the SessionFactory from hibernate.cfg.xml
             Configuration cfg = new Configuration();
-            cfg.setProperty("hibernate.connection.url", System.getenv("DATABASE_URL"));
+            Dotenv dotenv = Dotenv.load();
+            cfg.setProperty("hibernate.connection.url", dotenv.get("DATABASE_URL"));
             return cfg.buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Initial SessionFactory creation failed." + ex);
