@@ -12,16 +12,14 @@ public class HibernateUtil {
     }
 
     public static void shutdown() {
-        if (sessionFactory != null) {
-            sessionFactory.close();
-        }
+        sessionFactory.close();
     }
 
     private static SessionFactory buildSessionFactory() {
         try {
             // Create the SessionFactory from hibernate.cfg.xml
-            Configuration cfg = new Configuration();
-            Dotenv dotenv = Dotenv.load();
+            Configuration cfg = new Configuration().configure();
+            Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
             cfg.setProperty("hibernate.connection.url", dotenv.get("DATABASE_URL"));
             return cfg.buildSessionFactory();
         } catch (Throwable ex) {
