@@ -1,6 +1,8 @@
 package com.rakin.db;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
@@ -13,10 +15,12 @@ public class Sale {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @NotBlank
     @Column(nullable = false)
     private String product;
 
     @Column(nullable = false)
+    @DecimalMin(value = "0.0", inclusive = false, message = "Price cannot be zero")
     private BigDecimal price;
 
     @CreationTimestamp
