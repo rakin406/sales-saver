@@ -4,8 +4,10 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.List;
 
 public class SaleDao {
@@ -29,10 +31,10 @@ public class SaleDao {
             LocalDateTime end = today.plusDays(1).atStartOfDay();
 
             String hql = """
-                    from Sale sale
-                    where sale.createdAt >= :start
-                    and sale.createdAt < :end
-                    order by sale.createdAt
+                        from Sale sale
+                        where sale.createdAt >= :start
+                        and sale.createdAt < :end
+                        order by sale.createdAt
                     """;
 
             Query<Sale> query = session.createQuery(hql, Sale.class);
@@ -40,6 +42,30 @@ public class SaleDao {
             query.setParameter("end", end);
 
             return query.list();
+        }
+    }
+
+    public BigDecimal getMonthlyTotal() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // Get the current year and month
+            YearMonth currYearMonth = YearMonth.now();
+
+            // Get start and end dates of current month
+            LocalDateTime start = currYearMonth.atDay(1).atStartOfDay();
+            LocalDateTime end = currYearMonth.plusMonths(1).atDay(1).atStartOfDay();
+
+            String hql = """
+                        select coalesce(sum(sale.price), 0)
+                        from Sale sale
+                        where sale.createdAt >= :start
+                        and sale.createdAt < :end
+                    """;
+
+            Query<BigDecimal> query = session.createQuery(hql, BigDecimal.class);
+            query.setParameter("start", start);
+            query.setParameter("end", end);
+
+            return query.uniqueResult();
         }
     }
 
