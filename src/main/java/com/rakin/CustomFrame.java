@@ -2,9 +2,14 @@ package com.rakin;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 
-public class CustomFrame extends JFrame {
+public class CustomFrame extends JFrame implements ActionListener {
+    private static JFormattedTextField amountTextField;
+    private static JButton submitButton;
+
     CustomFrame() {
         this.setTitle("Sales Saver");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,7 +29,7 @@ public class CustomFrame extends JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
-        JFormattedTextField amountTextField = new JFormattedTextField(currencyFormat);
+        amountTextField = new JFormattedTextField(currencyFormat);
         amountTextField.setName("Amount");
         amountTextField.setColumns(10);
         amountTextField.setFont(new Font("Segoe UI", Font.PLAIN, 35));
@@ -35,10 +40,12 @@ public class CustomFrame extends JFrame {
         amountLabel.setLabelFor(amountTextField);
         amountLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JButton submitButton = new JButton("Submit");
+        submitButton = new JButton("Submit");
         submitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         submitButton.setFont(new Font("Segoe UI", Font.BOLD, 30));
         submitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        submitButton.setFocusable(false);
+        submitButton.addActionListener(this);
 
         panel.add(amountLabel);
         panel.add(Box.createVerticalStrut(10));
@@ -48,5 +55,12 @@ public class CustomFrame extends JFrame {
         mainPanel.add(panel);
 
         this.getContentPane().add(mainPanel);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == submitButton) {
+            System.out.println("Hello");
+        }
     }
 }
