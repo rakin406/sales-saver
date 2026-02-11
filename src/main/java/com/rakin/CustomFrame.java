@@ -37,9 +37,13 @@ public class CustomFrame extends JFrame {
 
         JButton submitButton = new JButton("Submit");
         submitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        submitButton.setFont(new Font("Segoe UI", Font.BOLD, 30));
+        submitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         panel.add(amountLabel);
+        panel.add(Box.createVerticalStrut(10));
         panel.add(amountTextField);
+        panel.add(Box.createVerticalStrut(80));
         panel.add(submitButton);
         mainPanel.add(panel);
 
