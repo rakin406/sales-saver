@@ -58,7 +58,8 @@ public class CustomFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submitButton) {
-            System.out.println("Hello");
+            System.out.println(amountTextField.getText());
+            amountTextField.setText("");
         }
     }
 }
