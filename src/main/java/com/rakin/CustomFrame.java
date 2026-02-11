@@ -4,10 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.NumberFormat;
 
 public class CustomFrame extends JFrame implements ActionListener {
-    private static JFormattedTextField amountTextField;
+    private static JTextField amountTextField;
     private static JButton submitButton;
 
     CustomFrame() {
@@ -28,8 +27,7 @@ public class CustomFrame extends JFrame implements ActionListener {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
-        amountTextField = new JFormattedTextField(currencyFormat);
+        amountTextField = new JTextField();
         amountTextField.setName("Amount");
         amountTextField.setColumns(10);
         amountTextField.setFont(new Font("Segoe UI", Font.PLAIN, 35));
