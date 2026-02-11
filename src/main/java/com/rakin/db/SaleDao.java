@@ -2,7 +2,10 @@ package com.rakin.db;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class SaleDao {
@@ -20,9 +23,23 @@ public class SaleDao {
 
     // Read
     public List<Sale> getTodaySales() {
-        // TODO: Query all sales of current date.
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from Sale", Sale.class).list();
+            LocalDate today = LocalDate.now();
+            LocalDateTime start = today.atStartOfDay();
+            LocalDateTime end = today.plusDays(1).atStartOfDay();
+
+            String hql = """
+                    from Sale sale
+                    where sale.createdAt >= :start
+                    and sale.createdAt < :end
+                    order by sale.createdAt
+                    """;
+
+            Query<Sale> query = session.createQuery(hql, Sale.class);
+            query.setParameter("start", start);
+            query.setParameter("end", end);
+
+            return query.list();
         }
     }
 
