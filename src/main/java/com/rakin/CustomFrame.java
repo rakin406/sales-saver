@@ -26,8 +26,10 @@ public class CustomFrame extends JFrame {
         JFormattedTextField amountTextField = new JFormattedTextField(currencyFormat);
         amountTextField.setName("Amount");
         amountTextField.setColumns(10);
+        amountTextField.setFont(new Font("Segoe UI", Font.PLAIN, 35));
 
-        JLabel amountLabel = new JLabel("Amount:");
+        JLabel amountLabel = new JLabel("Amount: ");
+        amountLabel.setFont(new Font("Segoe UI", Font.BOLD, 35));
         amountLabel.setLabelFor(amountTextField);
 
         panel.add(amountLabel);
