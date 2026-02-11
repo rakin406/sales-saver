@@ -8,8 +8,8 @@ public class CustomFrame extends JFrame {
         this.setTitle("Sales Saver");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
-        this.setSize(420, 420);
         this.setLocationRelativeTo(null);
+        this.setExtendedState(MAXIMIZED_BOTH);
         this.setVisible(true);
 
         // Set colors
