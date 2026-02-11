@@ -17,6 +17,9 @@ public class CustomFrame extends JFrame {
         this.getContentPane().setBackground(new Color(245, 245, 245));
         this.getContentPane().setForeground(new Color(17, 17, 17));
 
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new GridBagLayout());
+
         JPanel panel = new JPanel();
 
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
@@ -29,10 +32,8 @@ public class CustomFrame extends JFrame {
 
         panel.add(amountLabel);
         panel.add(amountTextField);
-
-        JPanel mainPanel = new JPanel();
         mainPanel.add(panel);
 
-        this.getContentPane().add(mainPanel, BorderLayout.CENTER);
+        this.getContentPane().add(mainPanel);
     }
 }
