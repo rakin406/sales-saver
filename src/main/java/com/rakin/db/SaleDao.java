@@ -29,9 +29,16 @@ public class SaleDao {
             List<Sale> todaySales = getTodaySales(session);
             BigDecimal totalMonthlySales = getMonthlyTotal(session);
 
+            BigDecimal totalTodaySales = BigDecimal.valueOf(0);
+
+            for (Sale sale : todaySales) {
+                totalTodaySales = totalTodaySales.add(sale.getPrice());
+            }
+
             DashboardMetrics metrics = new DashboardMetrics();
 
             metrics.setTodaySales(todaySales);
+            metrics.setTotalTodaySales(totalTodaySales);
             metrics.setTotalMonthlySales(totalMonthlySales);
 
             return metrics;
