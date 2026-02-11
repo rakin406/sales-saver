@@ -21,19 +21,26 @@ public class CustomFrame extends JFrame {
         mainPanel.setLayout(new GridBagLayout());
 
         JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
         JFormattedTextField amountTextField = new JFormattedTextField(currencyFormat);
         amountTextField.setName("Amount");
         amountTextField.setColumns(10);
         amountTextField.setFont(new Font("Segoe UI", Font.PLAIN, 35));
+        amountTextField.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel amountLabel = new JLabel("Amount: ");
         amountLabel.setFont(new Font("Segoe UI", Font.BOLD, 35));
         amountLabel.setLabelFor(amountTextField);
+        amountLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JButton submitButton = new JButton("Submit");
+        submitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         panel.add(amountLabel);
         panel.add(amountTextField);
+        panel.add(submitButton);
         mainPanel.add(panel);
 
         this.getContentPane().add(mainPanel);
