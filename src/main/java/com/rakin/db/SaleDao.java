@@ -24,48 +24,17 @@ public class SaleDao {
     }
 
     // Read
-    public List<Sale> getTodaySales() {
+    public DashboardMetrics getDashboardMetrics() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            LocalDate today = LocalDate.now();
-            LocalDateTime start = today.atStartOfDay();
-            LocalDateTime end = today.plusDays(1).atStartOfDay();
+            List<Sale> todaySales = getTodaySales(session);
+            BigDecimal totalMonthlySales = getMonthlyTotal(session);
 
-            String hql = """
-                        from Sale sale
-                        where sale.createdAt >= :start
-                        and sale.createdAt < :end
-                        order by sale.createdAt
-                    """;
+            DashboardMetrics metrics = new DashboardMetrics();
 
-            Query<Sale> query = session.createQuery(hql, Sale.class);
-            query.setParameter("start", start);
-            query.setParameter("end", end);
+            metrics.setTodaySales(todaySales);
+            metrics.setTotalMonthlySales(totalMonthlySales);
 
-            return query.list();
-        }
-    }
-
-    public BigDecimal getMonthlyTotal() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            // Get the current year and month
-            YearMonth currYearMonth = YearMonth.now();
-
-            // Get start and end dates of current month
-            LocalDateTime start = currYearMonth.atDay(1).atStartOfDay();
-            LocalDateTime end = currYearMonth.plusMonths(1).atDay(1).atStartOfDay();
-
-            String hql = """
-                        select coalesce(sum(sale.price), 0)
-                        from Sale sale
-                        where sale.createdAt >= :start
-                        and sale.createdAt < :end
-                    """;
-
-            Query<BigDecimal> query = session.createQuery(hql, BigDecimal.class);
-            query.setParameter("start", start);
-            query.setParameter("end", end);
-
-            return query.uniqueResult();
+            return metrics;
         }
     }
 
@@ -94,5 +63,49 @@ public class SaleDao {
         } catch (Exception e) {
             if (tx != null) tx.rollback();
         }
+    }
+
+    private List<Sale> getTodaySales(Session session) {
+        // Get start and end time
+        LocalDate today = LocalDate.now();
+        LocalDateTime start = today.atStartOfDay();
+        LocalDateTime end = today.plusDays(1).atStartOfDay();
+
+        String hql = """
+                    from Sale sale
+                    where sale.createdAt >= :start
+                    and sale.createdAt < :end
+                    order by sale.createdAt
+                """;
+
+        Query<Sale> query = session.createQuery(hql, Sale.class);
+
+        // Set parameters
+        query.setParameter("start", start);
+        query.setParameter("end", end);
+
+        return query.list();
+    }
+
+    private BigDecimal getMonthlyTotal(Session session) {
+        // Get the current year and month
+        YearMonth currYearMonth = YearMonth.now();
+
+        // Get start and end dates of current month
+        LocalDateTime start = currYearMonth.atDay(1).atStartOfDay();
+        LocalDateTime end = currYearMonth.plusMonths(1).atDay(1).atStartOfDay();
+
+        String hql = """
+                    select coalesce(sum(sale.price), 0)
+                    from Sale sale
+                    where sale.createdAt >= :start
+                    and sale.createdAt < :end
+                """;
+
+        Query<BigDecimal> query = session.createQuery(hql, BigDecimal.class);
+        query.setParameter("start", start);
+        query.setParameter("end", end);
+
+        return query.uniqueResult();
     }
 }
