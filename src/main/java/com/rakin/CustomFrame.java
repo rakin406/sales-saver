@@ -15,14 +15,18 @@ public class CustomFrame extends JFrame implements ActionListener {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setExtendedState(MAXIMIZED_BOTH);
-        this.setVisible(true);
 
         // Set colors
         this.getContentPane().setBackground(new Color(245, 245, 245));
         this.getContentPane().setForeground(new Color(17, 17, 17));
 
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new GridBagLayout());
+        mainPanel.setLayout(new BorderLayout());
+
+        JPanel sidePanel = new JPanel();
+        sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
+        sidePanel.setPreferredSize(new Dimension(400, 0));
+        sidePanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -50,9 +54,12 @@ public class CustomFrame extends JFrame implements ActionListener {
         panel.add(amountTextField);
         panel.add(Box.createVerticalStrut(80));
         panel.add(submitButton);
-        mainPanel.add(panel);
+
+        mainPanel.add(sidePanel, BorderLayout.WEST);
+        mainPanel.add(panel, BorderLayout.CENTER);
 
         this.getContentPane().add(mainPanel);
+        this.setVisible(true);
     }
 
     @Override
