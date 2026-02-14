@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CustomFrame extends JFrame implements ActionListener {
+    private static final Dimension AMOUNT_TEXT_FIELD_SIZE = new Dimension(500, 80);
     private static JTextField amountTextField;
     private static JButton submitButton;
 
@@ -33,9 +34,12 @@ public class CustomFrame extends JFrame implements ActionListener {
 
         amountTextField = new JTextField();
         amountTextField.setName("Amount");
-        amountTextField.setColumns(10);
+        amountTextField.setMinimumSize(AMOUNT_TEXT_FIELD_SIZE);
+        amountTextField.setPreferredSize(AMOUNT_TEXT_FIELD_SIZE);
+        amountTextField.setMaximumSize(AMOUNT_TEXT_FIELD_SIZE);
         amountTextField.setFont(new Font("Segoe UI", Font.PLAIN, 35));
         amountTextField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        amountTextField.setOpaque(false);
 
         JLabel amountLabel = new JLabel("Amount: ");
         amountLabel.setFont(new Font("Segoe UI", Font.BOLD, 35));
@@ -49,11 +53,13 @@ public class CustomFrame extends JFrame implements ActionListener {
         submitButton.setFocusable(false);
         submitButton.addActionListener(this);
 
+        panel.add(Box.createVerticalGlue());
         panel.add(amountLabel);
-        panel.add(Box.createVerticalStrut(10));
+        panel.add(Box.createVerticalStrut(20));
         panel.add(amountTextField);
         panel.add(Box.createVerticalStrut(80));
         panel.add(submitButton);
+        panel.add(Box.createVerticalGlue());
 
         mainPanel.add(sidePanel, BorderLayout.WEST);
         mainPanel.add(panel, BorderLayout.CENTER);
